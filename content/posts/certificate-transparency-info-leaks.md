@@ -106,4 +106,4 @@ Your monitoring tools and how you debug? Leaked.
 
 _This is valuable information which should not be visible to the external world._
 
-If you use any of the tools described above, at least know that this information is public, as most of the people I talked with were unaware. 
+If you use any of the tools described above, at least know that this information is public.
