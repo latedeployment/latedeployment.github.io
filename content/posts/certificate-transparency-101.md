@@ -1,6 +1,6 @@
 ---
 title: "Certificate Transparency 101"
-date: 2026-01-19
+date: 2026-01-19T08:00:00
 tags: ["security", "certificate transparency"]
 ShowToc: true
 TocOpen: true
@@ -121,13 +121,13 @@ A typical X.509 certificate contains:
   and IP addresses the certificate is valid for.
 
 Example SANs might include:
-```
-DNS:example.com
-DNS:www.example.com
-DNS:api.example.com
-DNS:staging.internal.example.com
-DNS:10-0-1-42.pods.cluster.local
-```
+
+    DNS:example.com
+    DNS:www.example.com
+    DNS:api.example.com
+    DNS:staging.internal.example.com
+    DNS:10-0-1-42.pods.cluster.local
+
 
 ### Validity period
 

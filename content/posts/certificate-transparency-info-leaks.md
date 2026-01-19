@@ -1,12 +1,14 @@
 ---
 title: "Certificate Transparency Info Leaks"
-date: 2026-01-19
+date: 2026-01-19T09:00:00
 tags: ["security", "certificate transparency", "information leak", "kubernetes"]
+ShowToc: true
+TocOpen: true
 ---
 
 _This is part two of the Certificate Transparency series_.
 
-I show here how certificate transparency is leaking valuable information about companies due to either unfamiliarity or obliviousness from companies' IT or Devops teams. 
+I show here how certificate transparency is leaking valuable information about companies due to either unfamiliarity or obliviousness from companies' IT or DevOps teams. 
 
 # Overview
 
@@ -14,7 +16,7 @@ As explained in [part one Certificate Transparency 101](/posts/certificate-trans
 
 *While I don't want to show proofs, let's just say that most of the cyber startups I've checked are leaking their entire infrastructure info through certificate transparency.*
 
-# How subdomains are created
+# Why subdomains are created
 
 Company buys its domain, let's say `example.com`. They serve it through HTTPs so they'd have to obtain a certificate. Before _Let's Encrypt_ companies would have to pay money to buy a certificate for a year. It wasn't very expensive, but enough to reduce the amount of certificates a company issues. When the company grows, to simplify its internal Infrastructure layout, it usually uses subdomains to separate internal servers from user interface and we'd start seeing `app.example.com`, `login.example.com` and others.
 
@@ -55,7 +57,7 @@ As the company deployment flow become more complicated, the company will start u
 As long as the subdomains are only in `DNS`, to gain information about a company you'd have to use brute-force with word-list in order to find something. So you'd have to query `app.example.com` or `ui.example.com` the DNS server to understand what is found and what not in a given company's domain.
 
 
-# The leak
+# The info leak
 As described in [part one Certificate Transparency 101](/posts/certificate-transparency-101/), each certificate issued for a domain will be stored *forever* in the certificate transparency logs.
 
 Indeed `app.example.com` doesn't mean anything as a leak, but what about `sailpoint.example.com`, or `okta.example.com`? This is valuable information about whether the company uses or integrates with SailPoint or Okta. 
@@ -66,51 +68,42 @@ When I contacted _Let's Encrypt_, they have basically told me people should be a
 
 With the help of a website called [crt.sh](https://crt.sh), anyone can query any domain they want, and the website will dump the company's entire infra. The reconnaissance step of understanding how a company works is done in a single search. 
 
-# Summary with LLM
+# Summary subdomains leak with LLM
 
 To make everything worse LLM are used everywhere right now. Query the `crt.sh`, cut the domain name to just keep a list of subdomains and tell LLM to summarize the company infrastructure with something like: 
 
-```
-  You are a cybersecurity and infrastructure analyst.
-  Analyze the provided list of subdomains and generate a concise summary of the company's infrastructure.
-  Identify patterns such as:
-  - Cloud providers (aws, azure, gcp, cloudflare, etc.)
-  - Development/staging/production environments
-  - Services and technologies (api, mail, vpn, jenkins, gitlab, etc.)
-  - Geographic regions
-  - Third-party integrations
-  - Security-related services
-  - Customer Names?
+    You are a cybersecurity and infrastructure analyst.
+    Analyze the provided list of subdomains and generate a concise summary of the company's infrastructure.
+    Identify patterns such as:
+    - Cloud providers (aws, azure, gcp, cloudflare, etc.)
+    - Development/staging/production environments
+    - Services and technologies (api, mail, vpn, jenkins, gitlab, etc.)
+    - Geographic regions
+    - Third-party integrations
+    - Security-related services
+    - Customer Names?
 
-  Provide a structured summary with bullet points.
-```
+    Provide a structured summary with bullet points.
 
-This provides a summary which pretty much describes the entire company infra, names of their customers and the tools they use. 
 
-# Summary of stuff which is leaked
+When added with the subdomains list, this provides a summary which pretty much describes the entire company infra, names of their customers and the tools they use. 
 
-- Cloud Providers
-- Environment types and all servers
-- Internal Tools 
+# Example of stuff which is leaked for companies
+
+- Environment details 
+- Servers layout
+- Internal Tools
 - External Integrations
 - Customer Names
 
-Your new integration for version _3.0_ with that huge undisclosed company? Leaked. 
+Your new integration for version _3.0_ with that huge undisclosed company? Leaked before relase. 
 
-Your highly confidential customer name? Leaked.
+Your highly confidential customer name? Leaked even with NDA.
 
 Your auth servers names? Leaked.
 
-Your monitoring tools? Leaked. 
+Your monitoring tools and how you debug? Leaked. 
 
-This is valuable information which should not be visible to the external world. 
+_This is valuable information which should not be visible to the external world._
 
-If you use any of the tools described about, at least know that this information is public, as most of the people I talked with are not aware. 
-
-
-
-
-
-
-
-
+If you use any of the tools described above, at least know that this information is public, as most of the people I talked with were unaware. 
