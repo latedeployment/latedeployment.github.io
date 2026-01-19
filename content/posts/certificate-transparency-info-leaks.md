@@ -58,7 +58,7 @@ As long as the subdomains are only in `DNS`, to gain information about a company
 
 
 # The info leak
-As described in [part one Certificate Transparency 101](/posts/certificate-transparency-101/), each certificate issued for a domain will be stored *forever* in the certificate transparency logs.
+As described in part one [Certificate Transparency 101](/posts/certificate-transparency-101/), each certificate issued for a domain will be stored *forever* in the certificate transparency logs.
 
 Indeed `app.example.com` doesn't mean anything as a leak, but what about `sailpoint.example.com`, or `okta.example.com`? This is valuable information about whether the company uses or integrates with SailPoint or Okta. 
 
