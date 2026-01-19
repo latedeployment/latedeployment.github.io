@@ -12,7 +12,7 @@ I show here how certificate transparency is leaking valuable information about c
 
 # Overview
 
-As explained in [part one Certificate Transparency 101](/posts/certificate-transparency-101/), certificate transparency makes the details of all trusted SSL certificates public for anyone to see. While it's useful for browsers to validate information about certificates issued by a CA, it is also useful for attackers to gain valuable information about companies' infrastructure. 
+As explained in part one [Certificate Transparency 101](/posts/certificate-transparency-101/), certificate transparency makes the details of all trusted SSL certificates public for anyone to see. While it's useful for browsers to validate information about certificates issued by a CA, it is also useful for attackers to gain valuable information about companies' infrastructure. 
 
 *While I don't want to show proofs, let's just say that most of the cyber startups I've checked are leaking their entire infrastructure info through certificate transparency.*
 
