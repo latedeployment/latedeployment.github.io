@@ -76,15 +76,7 @@ A Merkle tree is a binary tree where:
 - Each internal node contains the hash of its two children concatenated.
 - The root hash represents a cryptographic commitment to all data in the tree.
 
-```
-Level 0 (root):  RootHash = Hash(H_AB + H_CD)
-                      |
-Level 1:        H_AB        H_CD
-                 |           |
-Level 2:     H_A   H_B   H_C   H_D
-              |     |     |     |
-Leaves:    CertA CertB CertC CertD
-```
+{{< figure src="/images/merkle-tree.svg" alt="Merkle tree structure" >}}
 
 This structure enables two critical operations:
 

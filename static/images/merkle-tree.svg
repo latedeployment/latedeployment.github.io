@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320" width="600" height="320">
+  <style>
+    text { font-family: ui-monospace, monospace; font-size: 14px; fill: #e0e0e0; }
+    .label { font-size: 12px; fill: #888; }
+    line { stroke: #666; stroke-width: 2; }
+    rect { fill: #2d2d2d; stroke: #555; stroke-width: 1; rx: 4; }
+    .root rect { fill: #3d5a3d; stroke: #6a9a6a; }
+    .internal rect { fill: #3d4a5a; stroke: #6a8a9a; }
+    .leaf rect { fill: #5a4a3d; stroke: #9a8a6a; }
+  </style>
+  
+  <!-- Lines connecting nodes -->
+  <!-- Root to Level 1 -->
+  <line x1="300" y1="60" x2="175" y2="120" />
+  <line x1="300" y1="60" x2="425" y2="120" />
+  
+  <!-- Level 1 to Level 2 -->
+  <line x1="175" y1="160" x2="100" y2="220" />
+  <line x1="175" y1="160" x2="250" y2="220" />
+  <line x1="425" y1="160" x2="350" y2="220" />
+  <line x1="425" y1="160" x2="500" y2="220" />
+  
+  <!-- Root node -->
+  <g class="root">
+    <rect x="225" y="20" width="150" height="40" />
+    <text x="300" y="46" text-anchor="middle">Root Hash</text>
+  </g>
+  
+  <!-- Level 1 nodes -->
+  <g class="internal">
+    <rect x="110" y="120" width="130" height="40" />
+    <text x="175" y="146" text-anchor="middle">H(AB)</text>
+  </g>
+  <g class="internal">
+    <rect x="360" y="120" width="130" height="40" />
+    <text x="425" y="146" text-anchor="middle">H(CD)</text>
+  </g>
+  
+  <!-- Level 2 nodes (leaf hashes) -->
+  <g class="leaf">
+    <rect x="45" y="220" width="110" height="40" />
+    <text x="100" y="246" text-anchor="middle">H(CertA)</text>
+  </g>
+  <g class="leaf">
+    <rect x="195" y="220" width="110" height="40" />
+    <text x="250" y="246" text-anchor="middle">H(CertB)</text>
+  </g>
+  <g class="leaf">
+    <rect x="295" y="220" width="110" height="40" />
+    <text x="350" y="246" text-anchor="middle">H(CertC)</text>
+  </g>
+  <g class="leaf">
+    <rect x="445" y="220" width="110" height="40" />
+    <text x="500" y="246" text-anchor="middle">H(CertD)</text>
+  </g>
+  
+  <!-- Labels on the left -->
+  <text x="10" y="46" class="label">Root</text>
+  <text x="10" y="146" class="label">Level 1</text>
+  <text x="10" y="246" class="label">Leaves</text>
+</svg>
