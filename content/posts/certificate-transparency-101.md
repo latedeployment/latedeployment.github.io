@@ -6,6 +6,7 @@ ShowToc: true
 TocOpen: true
 ---
 
+_This is part one of the Certificate Transparency series_.
 
 Certificate Transparency (CT) is a public, append-only logging system for TLS
 certificates. It was created to make certificate issuance observable so that
