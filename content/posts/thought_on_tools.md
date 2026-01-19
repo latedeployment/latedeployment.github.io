@@ -46,7 +46,7 @@ Once you have a tool which return an error code on all cases, you can easily ext
 #!/bin/bash
 
 if ./our_tool.py; then
-   echo "success!"
+    echo "success!"
 else
     echo "failure, exit status: $?"
 fi

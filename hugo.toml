@@ -1,7 +1,8 @@
-theme = "hyde"
+theme = "PaperMod"
 # theme = 'ananke'
 title = "A lazy blog"
 languageCode = 'en-us'
 summaryLength = 15
 [params]
     description = "Some stuff over the years, some stuff is new"
+    disableSpecial1stPost = true
