@@ -68,7 +68,7 @@ When I contacted _Let's Encrypt_, they have basically told me people should be a
 
 With the help of a website called [crt.sh](https://crt.sh), anyone can query any domain they want, and the website will dump the company's entire infra. The reconnaissance step of understanding how a company works is done in a single search. 
 
-# Summary subdomains leak with LLM
+# Summarize subdomains leak with LLM
 
 To make everything worse LLM are used everywhere right now. Query the `crt.sh`, cut the domain name to just keep a list of subdomains and tell LLM to summarize the company infrastructure with something like: 
 
