@@ -137,7 +137,7 @@ And we can read back our message hidden inside the certificate.
 _RFC 6962 (Certificate Transparency)_ provides an API which allows us to
 query the logs efficiently. If we want to find a specific certificate,
 we can use binary search to home in on the entry by timestamp (say,
-issuance date). These logs can be massive—some with over 1 billion
+issuance date). These logs can be massive, some with over 1 billion
 entries, so we have to use binary search.
 
 But that means, in the worst case, we only need about 30 API queries to
