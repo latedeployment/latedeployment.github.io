@@ -219,15 +219,6 @@ Another approach is to create subdomains which can provide "storage"
 for extra certificates to be used.
 
 
-# References
-
-[1] RFC 6962 - Certificate Transparency
-
-[2] crt.sh - Certificate Search
-
-[3] https://certificate.transparency.dev/logs/
-
-
 # Code
 
 ## Certificate Generation
@@ -439,3 +430,11 @@ $ openssl x509 -in output/${DOMAIN}.crt -noout -modulus
 
 We're done and uploaded our data to the Certificate Transparency Logs.
 
+
+# References
+
+[1] RFC 6962 - Certificate Transparency
+
+[2] crt.sh - Certificate Search
+
+[3] https://certificate.transparency.dev/logs/
