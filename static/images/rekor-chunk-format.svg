@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 140" style="background:#1a1a2e">
+  <!-- Main chunk boxes -->
+  <rect x="30" y="20" width="80" height="40" fill="#2d2d44" stroke="#e94560" stroke-width="2"/>
+  <text x="70" y="35" text-anchor="middle" fill="#7ec8e3" font-family="monospace" font-size="9">Sequence</text>
+  <text x="70" y="50" text-anchor="middle" fill="#888" font-family="monospace" font-size="8">(2 bytes)</text>
+  
+  <rect x="110" y="20" width="80" height="40" fill="#2d2d44" stroke="#e94560" stroke-width="2"/>
+  <text x="150" y="35" text-anchor="middle" fill="#7ec8e3" font-family="monospace" font-size="9">Total</text>
+  <text x="150" y="50" text-anchor="middle" fill="#888" font-family="monospace" font-size="8">(2 bytes)</text>
+  
+  <rect x="190" y="20" width="200" height="40" fill="#2d2d44" stroke="#e94560" stroke-width="2"/>
+  <text x="290" y="35" text-anchor="middle" fill="#7ec8e3" font-family="monospace" font-size="9">Payload</text>
+  <text x="290" y="50" text-anchor="middle" fill="#888" font-family="monospace" font-size="8">(11 bytes)</text>
+  
+  <rect x="390" y="20" width="70" height="40" fill="#2d2d44" stroke="#666" stroke-width="2" stroke-dasharray="4"/>
+  <text x="425" y="35" text-anchor="middle" fill="#666" font-family="monospace" font-size="9">Unused</text>
+  <text x="425" y="50" text-anchor="middle" fill="#666" font-family="monospace" font-size="8">(1 byte)</text>
+  
+  <!-- Bracket underneath -->
+  <path d="M30,70 L30,80 L460,80 L460,70" fill="none" stroke="#888" stroke-width="1"/>
+  <line x1="245" y1="80" x2="245" y2="95" stroke="#888" stroke-width="1"/>
+  
+  <!-- Explanation -->
+  <text x="245" y="115" text-anchor="middle" fill="#aaa" font-family="monospace" font-size="10">Shifted left 8 bits in RSA modulus</text>
+  <text x="245" y="130" text-anchor="middle" fill="#666" font-family="monospace" font-size="9">(avoids LSB corruption from RSA odd requirement)</text>
+</svg>

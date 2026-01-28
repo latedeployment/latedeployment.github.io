@@ -94,39 +94,7 @@ We basically encrypt the data, chunk it to by its size and upload it to `rekor` 
 
 It would look something like that:
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                    SENDER FLOW                          │
-├─────────────────────────────────────────────────────────┤
-│                                                         │
-│   passphrase: "your-very-secure-password"               │
-│        │                                                │
-│        ├──► PBKDF2 ──► AES-256 key                      │
-│        │                    │                           │
-│        │              plaintext                         │
-│        │                    │                           │
-│        │              AES-GCM encrypt                   │
-│        │                    │                           │
-│        │              ciphertext                        │
-│        │                    │                           │
-│        │              chunk into 11-byte pieces         │
-│        │                    │                           │
-│        │         ┌────┬────┬────┬────┐                  │
-│        │         │ C0 │ C1 │ C2 │ C3 │ ...              │
-│        │         └─┬──┴─┬──┴─┬──┴─┬──┘                  │
-│        │           │    │    │    │                     │
-│        └──► derive artifact hashes                      │
-│             H0    H1   H2   H3                          │
-│              │     │    │    │                          │
-│              ▼     ▼    ▼    ▼                          │
-│         ┌───────────────────────────┐                   │
-│         │        REKOR LOG          │                   │
-│         │  [H0→RSA(C0)] [H1→RSA(C1)]│                   │
-│         │  [H2→RSA(C2)] [H3→RSA(C3)]│                   │
-│         └───────────────────────────┘                   │
-│                                                         │
-└─────────────────────────────────────────────────────────┘
-```
+![Sender Flow](/images/rekor-sender-flow.svg)
 
 ## Receiving Data
 
@@ -137,60 +105,13 @@ The receiver uses the passphrase to compute the hashes as well, and it then:
 3. **Concatenate**: Sort chunks by sequence and concatenate them together
 4. **Decrypt**: Decrypt with the derived key
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                   RECEIVER FLOW                         │
-├─────────────────────────────────────────────────────────┤
-│                                                         │
-│   passphrase: "your-very-secure-password"               │
-│        │                                                │
-│        ├──► derive artifact hashes                      │
-│        │    H0, H1, H2, H3, ...                         │
-│        │         │                                      │
-│        │         ▼                                      │
-│        │    search Rekor by hash                        │
-│        │         │                                      │
-│        │    ┌────┴────────────────────┐                 │
-│        │    │       REKOR LOG         │                 │
-│        │    │  search(H0) → entry     │                 │
-│        │    │  search(H1) → entry     │                 │
-│        │    │  search(H2) → entry     │                 │
-│        │    │  search(H3) → entry     │                 │
-│        │    └────┬────────────────────┘                 │
-│        │         │                                      │
-│        │    extract RSA pubkeys                         │
-│        │    extract chunks from moduli                  │
-│        │         │                                      │
-│        │    ┌────┬────┬────┬────┐                       │
-│        │    │ C0 │ C1 │ C2 │ C3 │                       │
-│        │    └────┴────┴────┴────┘                       │
-│        │         │                                      │
-│        │    reassemble ciphertext                       │
-│        │         │                                      │
-│        └──► PBKDF2 ──► AES-256 key                      │
-│                            │                            │
-│                       AES-GCM decrypt                   │
-│                            │                            │
-│                       plaintext                         │
-│                                                         │
-└─────────────────────────────────────────────────────────┘
-```
+![Receiver Flow](/images/rekor-receiver-flow.svg)
 
 ## Chunk Format
 
 Each chunk stores 15 bytes, but RSA requires odd moduli (LSB must be 1). To avoid corruption, we shift the data left by 8 bits:
 
-```
-┌─────────────┬─────────────┬─────────────────────────┬────────────┐
-│  Sequence   │    Total    │        Payload          │   Unused   │
-│  (2 bytes)  │  (2 bytes)  │       (11 bytes)        │  (1 byte)  │
-└─────────────┴─────────────┴─────────────────────────┴────────────┘
-       │                            │                        │
-       └────────────────────────────┴────────────────────────┘
-                                    │
-                         Shifted left 8 bits in RSA modulus
-                         (avoids LSB corruption from RSA odd requirement)
-```
+![Chunk Format](/images/rekor-chunk-format.svg)
 
 # Rekor API
 

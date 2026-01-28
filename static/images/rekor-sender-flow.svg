@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" style="background:#1a1a2e">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#888"/>
+    </marker>
+  </defs>
+  
+  <!-- Title -->
+  <rect x="10" y="10" width="480" height="380" rx="8" fill="none" stroke="#444" stroke-width="2"/>
+  <rect x="10" y="10" width="480" height="30" rx="8" fill="#2d2d44"/>
+  <text x="250" y="30" text-anchor="middle" fill="#e94560" font-family="monospace" font-size="14" font-weight="bold">SENDER FLOW</text>
+  
+  <!-- Passphrase -->
+  <text x="30" y="65" fill="#7ec8e3" font-family="monospace" font-size="11">passphrase: "4-karma-eagle-kettle"</text>
+  
+  <!-- Vertical line from passphrase -->
+  <line x1="80" y1="75" x2="80" y2="295" stroke="#666" stroke-width="1"/>
+  
+  <!-- PBKDF2 branch -->
+  <line x1="80" y1="90" x2="130" y2="90" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+  <text x="145" y="94" fill="#aaa" font-family="monospace" font-size="11">PBKDF2</text>
+  <line x1="195" y1="90" x2="245" y2="90" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+  <text x="260" y="94" fill="#e94560" font-family="monospace" font-size="11">AES-256 key</text>
+  
+  <!-- Encryption flow -->
+  <line x1="300" y1="100" x2="300" y2="120" stroke="#666" stroke-width="1"/>
+  <text x="300" y="140" text-anchor="middle" fill="#7ec8e3" font-family="monospace" font-size="11">plaintext</text>
+  <line x1="300" y1="150" x2="300" y2="165" stroke="#666" stroke-width="1" marker-end="url(#arrow)"/>
+  <text x="300" y="185" text-anchor="middle" fill="#aaa" font-family="monospace" font-size="11">AES-GCM encrypt</text>
+  <line x1="300" y1="195" x2="300" y2="210" stroke="#666" stroke-width="1" marker-end="url(#arrow)"/>
+  <text x="300" y="230" text-anchor="middle" fill="#7ec8e3" font-family="monospace" font-size="11">ciphertext</text>
+  <line x1="300" y1="240" x2="300" y2="255" stroke="#666" stroke-width="1" marker-end="url(#arrow)"/>
+  <text x="300" y="275" text-anchor="middle" fill="#aaa" font-family="monospace" font-size="11">chunk into pieces</text>
+  
+  <!-- Chunks -->
+  <rect x="165" y="285" width="40" height="25" fill="#2d2d44" stroke="#e94560"/>
+  <text x="185" y="302" text-anchor="middle" fill="#fff" font-family="monospace" font-size="10">C0</text>
+  <rect x="215" y="285" width="40" height="25" fill="#2d2d44" stroke="#e94560"/>
+  <text x="235" y="302" text-anchor="middle" fill="#fff" font-family="monospace" font-size="10">C1</text>
+  <rect x="265" y="285" width="40" height="25" fill="#2d2d44" stroke="#e94560"/>
+  <text x="285" y="302" text-anchor="middle" fill="#fff" font-family="monospace" font-size="10">C2</text>
+  <rect x="315" y="285" width="40" height="25" fill="#2d2d44" stroke="#e94560"/>
+  <text x="335" y="302" text-anchor="middle" fill="#fff" font-family="monospace" font-size="10">C3</text>
+  <text x="365" y="302" fill="#666" font-family="monospace" font-size="10">...</text>
+  
+  <!-- Hash derivation branch - connects to chunks -->
+  <line x1="80" y1="295" x2="145" y2="295" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+  <text x="85" y="288" fill="#aaa" font-family="monospace" font-size="9">derive hashes</text>
+  
+  <!-- Arrows from chunks down to Rekor -->
+  <line x1="185" y1="310" x2="185" y2="340" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+  <line x1="235" y1="310" x2="235" y2="340" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+  <line x1="285" y1="310" x2="285" y2="340" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+  <line x1="335" y1="310" x2="335" y2="340" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+  
+  <!-- Rekor Log box -->
+  <rect x="150" y="350" width="220" height="30" rx="4" fill="#2d2d44" stroke="#e94560"/>
+  <text x="260" y="370" text-anchor="middle" fill="#e94560" font-family="monospace" font-size="10" font-weight="bold">REKOR LOG</text>
+</svg>
