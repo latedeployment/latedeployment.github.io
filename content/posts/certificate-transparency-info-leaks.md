@@ -8,7 +8,7 @@ TocOpen: true
 
 _This is part two of the Certificate Transparency series_.
 
-I show here how certificate transparency is leaking valuable information about companies due to either unfamiliarity or obliviousness from companies' IT or DevOps teams. 
+Crtificate Transparency logs are leaking valuable information about companies due to either unfamiliarity or obliviousness from companies' IT or DevOps teams. 
 
 # Overview
 
