@@ -44,9 +44,9 @@ def derive_key(passphrase: str) -> bytes:
 
 `AES-GCM` provides both encryption and integrity with authentication tag, but comes with the cost that the encrypted output is slightly larger than the input:
 
-```
-encrypted = nonce (12 bytes) + ciphertext + tag (16 bytes)
-```
+
+    encrypted = nonce (12 bytes) + ciphertext + tag (16 bytes)
+
 
 ```python
 import secrets
