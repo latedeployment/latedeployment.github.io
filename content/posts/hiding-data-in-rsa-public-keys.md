@@ -56,12 +56,12 @@ We want to create an RSA key where the lower bits of the modulus `n` contain our
 
 If we want `n mod 2^k = target` (where `target` is our hidden data), and we've already picked a prime `q`, we need to find a prime `p` such that:
 
-```
-n = p × q
-n mod 2^k = target
-(p × q) mod 2^k = target
-p mod 2^k = target × q^(-1) mod 2^k
-```
+
+    n = p × q
+    n mod 2^k = target
+    (p × q) mod 2^k = target
+    p mod 2^k = target × q^(-1) mod 2^k
+
 
 So we then:
 
