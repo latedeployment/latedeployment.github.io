@@ -59,7 +59,7 @@ itself.
 
 # Hiding Data
 
-I assume the readers here know what RSA is, so I'd skip the math part.
+See [How to Hide Encrypted Data Inside RSA Public Keys](/posts/hiding-data-in-rsa-public-keys/) for more information.
 
 Basically, if we search for prime numbers *long enough*, we can find
 primes such that, when we multiply them together (forming the RSA
@@ -78,7 +78,6 @@ I am sure better people can come up with better ideas on how to hide
 actual data. In practice, the hidden data itself can be encrypted so it would look like
 random ("regular") bits, the reader only has to know where to look.
 
-See [How to Hide Encrypted Data Inside RSA Public Keys](/posts/hiding-data-in-rsa-public-keys/) for a complete walkthrough with code, diagrams, and the math behind this technique.
 
 After we created the primes, we can use them to generate a certificate
 and append it to the certificate transparency logs.
