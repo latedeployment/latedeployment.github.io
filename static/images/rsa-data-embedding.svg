@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 550 380" style="background:#1a1a2e">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#888"/>
+    </marker>
+  </defs>
+  
+  <!-- Title -->
+  <rect x="10" y="10" width="530" height="360" rx="8" fill="none" stroke="#444" stroke-width="2"/>
+  <rect x="10" y="10" width="530" height="30" rx="8" fill="#2d2d44"/>
+  <text x="275" y="30" text-anchor="middle" fill="#e94560" font-family="monospace" font-size="14" font-weight="bold">DATA EMBEDDING PROCESS</text>
+  
+  <!-- Step 1: Choose target -->
+  <text x="30" y="60" fill="#7ec8e3" font-family="monospace" font-size="11" font-weight="bold">1. Target Data</text>
+  <rect x="30" y="70" width="200" height="30" fill="#2d2d44" stroke="#e94560"/>
+  <text x="130" y="90" text-anchor="middle" fill="#e94560" font-family="monospace" font-size="10">message = "Hi" -&gt; 0x4869</text>
+  
+  <!-- Step 2: Generate q -->
+  <text x="30" y="125" fill="#7ec8e3" font-family="monospace" font-size="11" font-weight="bold">2. Generate random prime q</text>
+  <rect x="30" y="135" width="490" height="25" fill="#2d2d44" stroke="#666"/>
+  <text x="275" y="152" text-anchor="middle" fill="#888" font-family="monospace" font-size="9">q = random_prime(1024 bits)</text>
+  
+  <!-- Step 3: Calculate p_lower -->
+  <text x="30" y="185" fill="#7ec8e3" font-family="monospace" font-size="11" font-weight="bold">3. Calculate required lower bits for p</text>
+  <rect x="30" y="195" width="490" height="45" fill="#2d2d44" stroke="#666"/>
+  <text x="275" y="212" text-anchor="middle" fill="#aaa" font-family="monospace" font-size="9">We want: n mod 2^k = target</text>
+  <text x="275" y="228" text-anchor="middle" fill="#e94560" font-family="monospace" font-size="9">So: p_lower = target * q^(-1) mod 2^k</text>
+  
+  <!-- Step 4: Search for p -->
+  <text x="30" y="265" fill="#7ec8e3" font-family="monospace" font-size="11" font-weight="bold">4. Search for prime p with those lower bits</text>
+  
+  <!-- p structure diagram -->
+  <rect x="30" y="275" width="300" height="30" fill="#1a1a2e" stroke="#666"/>
+  <text x="105" y="294" text-anchor="middle" fill="#666" font-family="monospace" font-size="9">random upper bits</text>
+  <rect x="330" y="275" width="100" height="30" fill="#e94560" stroke="#e94560"/>
+  <text x="380" y="294" text-anchor="middle" fill="#fff" font-family="monospace" font-size="9">p_lower</text>
+  <text x="445" y="294" fill="#aaa" font-family="monospace" font-size="9">&lt;- fixed</text>
+  
+  <!-- Arrow down -->
+  <line x1="275" y1="305" x2="275" y2="325" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+  <text x="290" y="318" fill="#888" font-family="monospace" font-size="9">is_prime()?</text>
+  
+  <!-- Result -->
+  <text x="30" y="350" fill="#7ec8e3" font-family="monospace" font-size="11" font-weight="bold">5. Result: n = p * q contains target in lower bits</text>
+</svg>

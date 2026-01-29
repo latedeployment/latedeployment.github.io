@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 550 260" style="background:#1a1a2e">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#888"/>
+    </marker>
+  </defs>
+  
+  <!-- Title -->
+  <rect x="10" y="10" width="530" height="240" rx="8" fill="none" stroke="#444" stroke-width="2"/>
+  <rect x="10" y="10" width="530" height="30" rx="8" fill="#2d2d44"/>
+  <text x="275" y="30" text-anchor="middle" fill="#e94560" font-family="monospace" font-size="14" font-weight="bold">RSA MODULUS ENCODING</text>
+  
+  <!-- Before shift label -->
+  <text x="30" y="65" fill="#7ec8e3" font-family="monospace" font-size="10">Before encoding (15 bytes):</text>
+  
+  <!-- Before boxes -->
+  <rect x="30" y="75" width="60" height="30" fill="#2d2d44" stroke="#7ec8e3"/>
+  <text x="60" y="95" text-anchor="middle" fill="#7ec8e3" font-family="monospace" font-size="8">seq</text>
+  
+  <rect x="90" y="75" width="60" height="30" fill="#2d2d44" stroke="#7ec8e3"/>
+  <text x="120" y="95" text-anchor="middle" fill="#7ec8e3" font-family="monospace" font-size="8">total</text>
+  
+  <rect x="150" y="75" width="280" height="30" fill="#2d2d44" stroke="#e94560"/>
+  <text x="290" y="95" text-anchor="middle" fill="#e94560" font-family="monospace" font-size="8">payload (11 bytes)</text>
+  
+  <!-- Arrow down -->
+  <line x1="275" y1="110" x2="275" y2="140" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+  <text x="290" y="130" fill="#888" font-family="monospace" font-size="9">shift left 8 bits</text>
+  
+  <!-- After shift label -->
+  <text x="30" y="165" fill="#7ec8e3" font-family="monospace" font-size="10">After encoding (16 bytes in RSA modulus):</text>
+  
+  <!-- After boxes -->
+  <rect x="30" y="175" width="60" height="30" fill="#2d2d44" stroke="#7ec8e3"/>
+  <text x="60" y="195" text-anchor="middle" fill="#7ec8e3" font-family="monospace" font-size="8">seq</text>
+  
+  <rect x="90" y="175" width="60" height="30" fill="#2d2d44" stroke="#7ec8e3"/>
+  <text x="120" y="195" text-anchor="middle" fill="#7ec8e3" font-family="monospace" font-size="8">total</text>
+  
+  <rect x="150" y="175" width="280" height="30" fill="#2d2d44" stroke="#e94560"/>
+  <text x="290" y="195" text-anchor="middle" fill="#e94560" font-family="monospace" font-size="8">payload (11 bytes)</text>
+  
+  <rect x="430" y="175" width="70" height="30" fill="#1a1a2e" stroke="#666" stroke-dasharray="4"/>
+  <text x="465" y="190" text-anchor="middle" fill="#666" font-family="monospace" font-size="8">0x01</text>
+  <text x="465" y="200" text-anchor="middle" fill="#555" font-family="monospace" font-size="7">(LSB)</text>
+  
+  <!-- Explanation -->
+  <text x="275" y="230" text-anchor="middle" fill="#aaa" font-family="monospace" font-size="9">RSA modulus must be odd (LSB=1), so we reserve the lowest byte</text>
+  <text x="275" y="245" text-anchor="middle" fill="#888" font-family="monospace" font-size="9">Data is stored in bits 8-127 of the modulus</text>
+</svg>

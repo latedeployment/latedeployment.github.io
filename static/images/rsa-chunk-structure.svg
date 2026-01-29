@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 550 180" style="background:#1a1a2e">
+  <!-- Title -->
+  <rect x="10" y="10" width="530" height="160" rx="8" fill="none" stroke="#444" stroke-width="2"/>
+  <rect x="10" y="10" width="530" height="30" rx="8" fill="#2d2d44"/>
+  <text x="275" y="30" text-anchor="middle" fill="#e94560" font-family="monospace" font-size="14" font-weight="bold">CHUNK STRUCTURE (15 bytes)</text>
+  
+  <!-- Chunk boxes -->
+  <rect x="30" y="55" width="80" height="45" fill="#2d2d44" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="70" y="73" text-anchor="middle" fill="#7ec8e3" font-family="monospace" font-size="10">Sequence</text>
+  <text x="70" y="90" text-anchor="middle" fill="#888" font-family="monospace" font-size="9">(2 bytes)</text>
+  
+  <rect x="110" y="55" width="80" height="45" fill="#2d2d44" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="150" y="73" text-anchor="middle" fill="#7ec8e3" font-family="monospace" font-size="10">Total</text>
+  <text x="150" y="90" text-anchor="middle" fill="#888" font-family="monospace" font-size="9">(2 bytes)</text>
+  
+  <rect x="190" y="55" width="300" height="45" fill="#2d2d44" stroke="#e94560" stroke-width="2"/>
+  <text x="340" y="73" text-anchor="middle" fill="#e94560" font-family="monospace" font-size="10">Payload</text>
+  <text x="340" y="90" text-anchor="middle" fill="#888" font-family="monospace" font-size="9">(11 bytes of encrypted data)</text>
+  
+  <!-- Bracket and label -->
+  <path d="M30,110 L30,120 L190,120" fill="none" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="110" y="140" text-anchor="middle" fill="#7ec8e3" font-family="monospace" font-size="9">Header (4 bytes)</text>
+  
+  <path d="M190,110 L190,120 L490,120 L490,110" fill="none" stroke="#e94560" stroke-width="1"/>
+  <text x="340" y="140" text-anchor="middle" fill="#e94560" font-family="monospace" font-size="9">Data (11 bytes)</text>
+  
+  <!-- Total -->
+  <text x="275" y="165" text-anchor="middle" fill="#aaa" font-family="monospace" font-size="10">Total: 15 bytes per chunk (before RSA encoding)</text>
+</svg>

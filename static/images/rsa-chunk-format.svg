@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 200" style="background:#1a1a2e">
+  <!-- Title -->
+  <rect x="10" y="10" width="480" height="180" rx="8" fill="none" stroke="#444" stroke-width="2"/>
+  <rect x="10" y="10" width="480" height="30" rx="8" fill="#2d2d44"/>
+  <text x="250" y="30" text-anchor="middle" fill="#e94560" font-family="monospace" font-size="14" font-weight="bold">HIDDEN DATA FORMAT IN MODULUS</text>
+  
+  <!-- Bit layout label -->
+  <text x="30" y="65" fill="#7ec8e3" font-family="monospace" font-size="10">Lower 128 bits of modulus n:</text>
+  
+  <!-- Bit boxes -->
+  <!-- Hidden data (120 bits) -->
+  <rect x="30" y="75" width="340" height="40" fill="#2d2d44" stroke="#e94560" stroke-width="2"/>
+  <text x="200" y="92" text-anchor="middle" fill="#e94560" font-family="monospace" font-size="11">Hidden Data</text>
+  <text x="200" y="107" text-anchor="middle" fill="#888" font-family="monospace" font-size="9">(15 bytes / 120 bits)</text>
+  
+  <!-- Padding (8 bits) -->
+  <rect x="370" y="75" width="100" height="40" fill="#2d2d44" stroke="#666" stroke-width="2" stroke-dasharray="4"/>
+  <text x="420" y="92" text-anchor="middle" fill="#666" font-family="monospace" font-size="11">Padding</text>
+  <text x="420" y="107" text-anchor="middle" fill="#555" font-family="monospace" font-size="9">(1 byte)</text>
+  
+  <!-- Bit positions -->
+  <text x="30" y="130" fill="#aaa" font-family="monospace" font-size="8">bit 127</text>
+  <text x="350" y="130" fill="#aaa" font-family="monospace" font-size="8">bit 8</text>
+  <text x="445" y="130" fill="#aaa" font-family="monospace" font-size="8">bit 0</text>
+  
+  <!-- Explanation -->
+  <text x="250" y="155" text-anchor="middle" fill="#aaa" font-family="monospace" font-size="10">Data is shifted left 8 bits before embedding</text>
+  <text x="250" y="175" text-anchor="middle" fill="#888" font-family="monospace" font-size="9">RSA requires odd modulus (LSB=1), so we leave lowest byte as padding</text>
+</svg>

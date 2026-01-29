@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 420" style="background:#1a1a2e">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#888"/>
+    </marker>
+  </defs>
+  
+  <!-- Title -->
+  <rect x="10" y="10" width="580" height="400" rx="8" fill="none" stroke="#444" stroke-width="2"/>
+  <rect x="10" y="10" width="580" height="30" rx="8" fill="#2d2d44"/>
+  <text x="300" y="30" text-anchor="middle" fill="#e94560" font-family="monospace" font-size="14" font-weight="bold">ENCRYPTION AND CHUNKING PIPELINE</text>
+  
+  <!-- Passphrase -->
+  <rect x="30" y="55" width="160" height="30" rx="4" fill="#2d2d44" stroke="#7ec8e3"/>
+  <text x="110" y="75" text-anchor="middle" fill="#7ec8e3" font-family="monospace" font-size="10">passphrase</text>
+  
+  <!-- Arrow to PBKDF2 -->
+  <line x1="190" y1="70" x2="220" y2="70" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+  
+  <!-- PBKDF2 -->
+  <rect x="230" y="55" width="100" height="30" rx="4" fill="#1a1a2e" stroke="#666"/>
+  <text x="280" y="75" text-anchor="middle" fill="#aaa" font-family="monospace" font-size="10">PBKDF2</text>
+  
+  <!-- Arrow to AES Key -->
+  <line x1="330" y1="70" x2="360" y2="70" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+  
+  <!-- AES Key -->
+  <rect x="370" y="55" width="120" height="30" rx="4" fill="#2d2d44" stroke="#e94560"/>
+  <text x="430" y="75" text-anchor="middle" fill="#e94560" font-family="monospace" font-size="10">AES-256 key</text>
+  
+  <!-- Plaintext -->
+  <rect x="30" y="110" width="160" height="30" rx="4" fill="#2d2d44" stroke="#7ec8e3"/>
+  <text x="110" y="130" text-anchor="middle" fill="#7ec8e3" font-family="monospace" font-size="10">plaintext message</text>
+  
+  <!-- Arrow down from key -->
+  <line x1="430" y1="85" x2="430" y2="115" stroke="#888" stroke-width="1"/>
+  
+  <!-- Arrow from plaintext -->
+  <line x1="190" y1="125" x2="280" y2="125" stroke="#888" stroke-width="1"/>
+  <line x1="280" y1="125" x2="280" y2="115" stroke="#888" stroke-width="1"/>
+  
+  <!-- AES-GCM Encrypt -->
+  <rect x="230" y="115" width="250" height="35" rx="4" fill="#1a1a2e" stroke="#666"/>
+  <text x="355" y="137" text-anchor="middle" fill="#aaa" font-family="monospace" font-size="10">AES-GCM encrypt</text>
+  
+  <!-- Arrow down -->
+  <line x1="355" y1="150" x2="355" y2="175" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+  
+  <!-- Encrypted data -->
+  <rect x="230" y="185" width="250" height="35" rx="4" fill="#2d2d44" stroke="#e94560"/>
+  <text x="355" y="200" text-anchor="middle" fill="#e94560" font-family="monospace" font-size="9">nonce (12) + ciphertext + tag (16)</text>
+  <text x="355" y="212" text-anchor="middle" fill="#666" font-family="monospace" font-size="8">+28 bytes overhead</text>
+  
+  <!-- Arrow down -->
+  <line x1="355" y1="220" x2="355" y2="245" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+  
+  <!-- Prepend length -->
+  <rect x="230" y="255" width="250" height="30" rx="4" fill="#1a1a2e" stroke="#666"/>
+  <text x="355" y="275" text-anchor="middle" fill="#aaa" font-family="monospace" font-size="10">prepend 4-byte length</text>
+  
+  <!-- Arrow down -->
+  <line x1="355" y1="285" x2="355" y2="310" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+  
+  <!-- Chunk -->
+  <rect x="230" y="320" width="250" height="30" rx="4" fill="#1a1a2e" stroke="#666"/>
+  <text x="355" y="340" text-anchor="middle" fill="#aaa" font-family="monospace" font-size="10">split into 11-byte chunks</text>
+  
+  <!-- Arrow down to chunks -->
+  <line x1="355" y1="350" x2="355" y2="370" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+  
+  <!-- Multiple chunks -->
+  <rect x="120" y="380" width="60" height="25" fill="#2d2d44" stroke="#e94560"/>
+  <text x="150" y="397" text-anchor="middle" fill="#fff" font-family="monospace" font-size="9">RSA 0</text>
+  
+  <rect x="195" y="380" width="60" height="25" fill="#2d2d44" stroke="#e94560"/>
+  <text x="225" y="397" text-anchor="middle" fill="#fff" font-family="monospace" font-size="9">RSA 1</text>
+  
+  <rect x="270" y="380" width="60" height="25" fill="#2d2d44" stroke="#e94560"/>
+  <text x="300" y="397" text-anchor="middle" fill="#fff" font-family="monospace" font-size="9">RSA 2</text>
+  
+  <rect x="345" y="380" width="60" height="25" fill="#2d2d44" stroke="#e94560"/>
+  <text x="375" y="397" text-anchor="middle" fill="#fff" font-family="monospace" font-size="9">RSA 3</text>
+  
+  <text x="420" y="397" fill="#666" font-family="monospace" font-size="9">...</text>
+  
+  <rect x="445" y="380" width="60" height="25" fill="#2d2d44" stroke="#e94560"/>
+  <text x="475" y="397" text-anchor="middle" fill="#fff" font-family="monospace" font-size="9">RSA N</text>
+</svg>
