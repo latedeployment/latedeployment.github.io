@@ -417,7 +417,7 @@ hidden_hex=$(echo "$modulus" | tail -c 33)
 echo "$hidden_hex" | xxd -r -p | tr -d '\0'
 ```
 
-# Tool
+# SecertCert
 
 See full implementation in **[secertcert](https://github.com/latedeployment/secertcert)** 
 
