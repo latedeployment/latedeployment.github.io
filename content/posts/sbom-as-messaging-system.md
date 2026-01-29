@@ -67,6 +67,8 @@ We use the exact same public key manipulation technique described in [Part 3](/p
 
 Since `rekor` stores the a full public key in each entry, the receiver can extract the modulus and retrieve the hidden chunk without needing the private key.
 
+> **Deep Dive**: For a detailed explanation of how this technique works, including the math, code, and step-by-step walkthrough, see [How to Hide Encrypted Data Inside RSA Public Keys](/posts/hiding-data-in-rsa-public-keys/).
+
 # "Architecture"
 
 The system works like this:
