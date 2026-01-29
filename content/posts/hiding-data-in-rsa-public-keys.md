@@ -301,13 +301,13 @@ if __name__ == "__main__":
 ```
 
 Output:
-```
-Original message: b'Hello, World!'
-Message length: 13 bytes (max: 15)
-RSA-2048 key generated
-Modulus (last 32 hex chars): ...48656c6c6f2c20576f726c6421000001
-Extracted message: b'Hello, World!'
-```
+
+    Original message: b'Hello, World!'
+    Message length: 13 bytes (max: 15)
+    RSA-2048 key generated
+    Modulus (last 32 hex chars): ...48656c6c6f2c20576f726c6421000001
+    Extracted message: b'Hello, World!'
+
 
 Hex `48656c6c6f2c20576f726c6421` is ASCII for "Hello, World!".
 
