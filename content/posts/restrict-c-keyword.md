@@ -112,10 +112,10 @@ All we did was change the type of the pointer, and the compiler was able to gene
 
 A benchmark shows that it *does* speedup things: 
 
-```
-Array size : 4194304 elements (16 MB per array)
-Iterations : 200 (+ 10 warmup)
 
-copy_sum (no restrict)           1.12 ms    28490.2 MB/s
-copy_sum_restrict                0.70 ms    45964.6 MB/s
-```
+        Array size : 4194304 elements (16 MB per array)
+        Iterations : 200 (+ 10 warmup)
+
+        copy_sum (no restrict)           1.12 ms    28490.2 MB/s
+        copy_sum_restrict                0.70 ms    45964.6 MB/s
+
