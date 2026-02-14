@@ -1,0 +1,12 @@
+<svg width="340" height="140" viewBox="0 0 340 140" xmlns="http://www.w3.org/2000/svg" font-family="monospace">
+  <rect x="20" y="35" width="140" height="40" fill="#d0e6ff" stroke="#6a89cc" rx="10"/>
+  <text x="90" y="60" text-anchor="middle" fill="#3a3a3a" font-size="14">dst</text>
+  <rect x="170" y="35" width="140" height="40" fill="#c0ffd0" stroke="#4fc26a" rx="10"/>
+  <text x="240" y="60" text-anchor="middle" fill="#3a3a3a" font-size="14">src</text>
+  <rect x="90" y="85" width="80" height="38" fill="#ffe6d0" stroke="#b79240" rx="10"/>
+  <text x="130" y="110" text-anchor="middle" fill="#3a3a3a" font-size="14">val</text>
+  <!-- Show overlap -->
+  <rect x="150" y="35" width="30" height="40" fill="#f4fcbd" opacity="0.7" stroke="#d1c75c" rx="4"/>
+  <text x="165" y="60" text-anchor="middle" fill="#9e9026" font-size="12" font-style="italic">?</text>
+  <text x="30" y="20" font-size="11" fill="#888">Memory layout (example)</text>
+</svg>
