@@ -41,7 +41,7 @@ makethlm --dry-run deploy     # preview without executing
 makethlm --list               # list all tasks
 ```
 
-## Features I like
+## Features like
 
 **Functions** let you define reusable prompt templates and inject them into tasks with `@use`:
 
