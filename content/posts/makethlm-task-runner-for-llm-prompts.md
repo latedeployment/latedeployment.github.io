@@ -16,7 +16,7 @@ Write a `Promptfile`, and each task is a mix of LLM prompts and shell commands (
 
 ## Quick example
 
-```
+```makefile
 # Promptfile
 
 project := "my-web-app"
@@ -47,7 +47,7 @@ makethlm --list               # list all tasks
 
 **Functions** let you define reusable prompt templates and inject them into tasks with `@use`:
 
-```
+```makefile
 fn security_review:
     Review the code for security vulnerabilities.
     Check for SQL injection, XSS, command injection, path traversal.
@@ -59,7 +59,7 @@ task review:
 
 **Docker blocks** describe images in plain English - the LLM generates the Dockerfile, `makethlm` builds it:
 
-```
+```makefile
 docker api-server [tag=latest]:
     A Python 3.11 slim image.
     Install requirements.txt with pip, no cache.
@@ -69,7 +69,7 @@ docker api-server [tag=latest]:
 
 **SSH host inventory** lets you run tasks on remote hosts, like in `ansible`:
 
-```
+```makefile
 hosts web [user=deploy]:
     web1.prod.internal
     web2.prod.internal
@@ -81,7 +81,7 @@ task deploy [on=web]: build
 
 **Multi-LLM routing** -- define multiple providers and pick one per task:
 
-```
+```makefile
 llm claude [model=opus]
 llm openai [model=gpt-4]
 
