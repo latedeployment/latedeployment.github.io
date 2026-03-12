@@ -22,13 +22,13 @@ _ELF_ magic lives at byte 0 (`7f 45 4c 46`), while tar's ustar magic sits at byt
 
 The file layout looks like this:
 
-```
-[0-63]       ELF64 header (fits within the tar filename field)
-[64-511]     Remaining tar header (ustar magic at byte 257)
-[512-4095]   NUL padding (page-aligns the loader for mmap)
-[4096-~75K]  Loader binary (statically linked C)
-[~75K-end]   OCI image tar (manifest.json, config, layer tarballs)
-```
+
+    [0-63]       ELF64 header (fits within the tar filename field)
+    [64-511]     Remaining tar header (ustar magic at byte 257)
+    [512-4095]   NUL padding (page-aligns the loader for mmap)
+    [4096-~75K]  Loader binary (statically linked C)
+    [~75K-end]   OCI image tar (manifest.json, config, layer tarballs)
+
 
 The `build_polyglot.py` script parses the loader's _ELF_ to extract entry points and program headers, builds a synthetic _ELF64_ header, creates the tar header structure around it, and appends the OCI image data. Marker offsets (`OCI_DATA_OFFSET`, `OCI_DATA_SIZE`) are patched into the binary so the loader knows where to find the embedded image.
 
