@@ -6,3 +6,9 @@ summaryLength = 15
 [params]
     description = "Some stuff over the years, some stuff is new"
     disableSpecial1stPost = true
+
+[author]
+    name = "latedeployment"
+
+[params.author]
+    name = "latedeployment"
