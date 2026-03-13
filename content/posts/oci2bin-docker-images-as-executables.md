@@ -16,40 +16,61 @@ The output is a **polyglot file** which is simultaneously a valid _ELF64_ execut
 
 ## The Polyglot Format
 
-See `sysfatal` [blog post](https://sysfatal.github.io/polyglottar-en.html) which describes `ELF+TAR polygot`.
+The output is a polyglot file — valid as both an _ELF64_ executable and a _POSIX tar_ archive simultaneously. This works because the two formats' magic bytes don't collide: _ELF_ magic (`7f 45 4c 46`) lives at byte 0, while tar's ustar magic sits at byte 257. The 64-byte _ELF_ header fits entirely within the tar filename field (bytes 0–99), and the remaining tar header fields fill bytes 64–511 without touching the _ELF_ magic. See `sysfatal`'s [blog post](https://sysfatal.github.io/polyglottar-en.html) for more on the `ELF+TAR` polyglot technique.
 
-_ELF_ magic lives at byte 0 (`7f 45 4c 46`), while tar's ustar magic sits at byte 257. These don't overlap, so one file can satisfy both formats at once.
+The file layout:
 
-The file layout looks like this:
-
-
-    [0-63]       ELF64 header (fits within the tar filename field)
+    [0-63]       ELF64 header (embedded in tar's filename field)
     [64-511]     Remaining tar header (ustar magic at byte 257)
     [512-4095]   NUL padding (page-aligns the loader for mmap)
     [4096-~75K]  Loader binary (statically linked C)
     [~75K-end]   OCI image tar (manifest.json, config, layer tarballs)
+    [EOF]        Metadata block (image name, digest, timestamp)
 
+The `build_polyglot.py` script parses the loader's _ELF_ to extract entry points and program headers, then builds a synthetic _ELF64_ header and wraps it in a tar header structure. The loader's program header offsets are shifted by `PAGE_SIZE` (4096 bytes) to account for the tar header prefix, while keeping virtual addresses unchanged — maintaining the `p_offset % PAGE_SIZE == p_vaddr % PAGE_SIZE` invariant required for `mmap`.
 
-The `build_polyglot.py` script parses the loader's _ELF_ to extract entry points and program headers, builds a synthetic _ELF64_ header, creates the tar header structure around it, and appends the OCI image data. Marker offsets (`OCI_DATA_OFFSET`, `OCI_DATA_SIZE`) are patched into the binary so the loader knows where to find the embedded image.
+The loader binary contains placeholder marker values that are patched at build time:
+
+- `OCI_DATA_OFFSET` — patched with the byte offset where the OCI tar begins
+- `OCI_DATA_SIZE` — patched with the OCI tar's size in bytes
+- `OCI_PATCHED` — set to confirm patching succeeded
+
+This is how the loader knows where to find the embedded image inside itself.
 
 ## The Loader
 
-When you execute the binary, the loader (statically linked in C, no dependencies) does the following:
+When you execute the binary, the loader (~2800 lines of statically linked C, no dependencies) runs the following sequence:
 
-1. Reads `/proc/self/exe` to find itself
-2. Seeks to the embedded OCI tar and extracts it to a temp directory
-3. Extracts all image layers into a `rootfs/`
-4. Patches the rootfs for single-UID namespace operation (rewrites `/etc/passwd`, disables apt sandbox, copies host DNS)
-5. Sets up Linux namespaces: `CLONE_NEWUSER`, `CLONE_NEWPID`, `CLONE_NEWNS`, `CLONE_NEWUTS`, and optionally `CLONE_NEWNET`
-6. Maps host UID to container UID 0 via user namespace
-7. Bind-mounts volumes, secrets, devices, tmpfs
-8. `chroot`s into the rootfs and execs the entrypoint
+1. Reads `/proc/self/exe` to find its own path
+2. Verifies the `OCI_PATCHED` marker, then seeks to `OCI_DATA_OFFSET` and extracts the embedded OCI tar to a temp directory (`mkdtemp`, mode `0700`)
+3. Parses `manifest.json` from the extracted OCI tar to get the layer list and config
+4. Extracts each image layer in order into a `rootfs/`, validating every path against traversal attacks (rejects `..` components and absolute paths)
+5. Patches the rootfs for single-UID namespace operation:
+   - Rewrites `/etc/passwd` and `/etc/group` — maps all UIDs/GIDs to 0 (except `nobody` at 65534)
+   - Writes `/etc/apt/apt.conf.d/99oci2bin` to disable apt's sandbox (which would fail under UID remapping)
+   - Replaces `/etc/resolv.conf` with the host's actual resolver config (the chroot can't follow symlinks outside the rootfs)
+6. Enters the user namespace (`CLONE_NEWUSER`) and maps container UID/GID 0 to the invoking user's real UID/GID — no real root privileges are gained
+7. Enters mount, PID, and UTS namespaces (`CLONE_NEWNS | CLONE_NEWPID | CLONE_NEWUTS`), and optionally the network namespace (`CLONE_NEWNET` with `--net none`)
+8. Forks — the child becomes PID 1 in the new PID namespace, the parent waits and cleans up the temp directory on exit
+9. Child sets up bind mounts for volumes, secrets, SSH agent forwarding, and optionally an overlayfs for `--read-only` mode
+10. `chroot`s into the rootfs, mounts `/proc`, `/tmp`, `/dev` (with device nodes: null, zero, random, urandom, tty), applies seccomp filter and capability restrictions
+11. `exec`s the entrypoint
 
-All rootless. The only dependency on the target system is `tar`.
+All rootless. No daemon, no suid helper. The only dependency on the target system is `tar`.
 
 ## Security
 
-The loader applies a `seccomp-BPF` filter by default, blocking syscalls like `kexec_load`, `reboot`, `ptrace`, `bpf`, and `init_module`. It sets `PR_SET_NO_NEW_PRIVS` to prevent privilege escalation. Tar extraction runs with `--no-same-permissions --no-same-owner` so setuid bits don't survive. The temp directory is created with `mkdtemp` (mode `0700`).
+**Seccomp-BPF filtering.** The loader installs a BPF filter (with architecture validation) that blocks 16 dangerous syscalls by default: `kexec_load`, `kexec_file_load`, `reboot`, `syslog`, `perf_event_open`, `bpf`, `add_key`, `request_key`, `keyctl`, `userfaultfd`, `pivot_root`, `ptrace`, `process_vm_readv`, `process_vm_writev`, `init_module`, and `finit_module`. The filter is applied with `SECCOMP_FILTER_FLAG_TSYNC` to cover all threads, falling back to `prctl(PR_SET_SECCOMP)` if unavailable. Can be disabled with `--no-seccomp`.
+
+**Privilege escalation prevention.** `PR_SET_NO_NEW_PRIVS` is set before exec, preventing privilege gains through setuid binaries or file capabilities. The user namespace maps only a single UID/GID — container root is just the invoking user on the host.
+
+**Capability management.** Linux capabilities can be dropped and selectively re-added (`--cap-drop all --cap-add NET_BIND_SERVICE`). The loader manages the permitted set, inheritable set, ambient set, and the bounding set — dropping from the bounding set is permanent for the process lifetime.
+
+**Tar extraction safety.** Layers are extracted with `--no-same-permissions --no-same-owner`, stripping setuid/setgid bits and ignoring the original file ownership. Every layer path is validated to reject `..` components and absolute paths before extraction.
+
+**Symlink attack prevention.** Secret files, SSH agent sockets, and device mounts are created with `O_CREAT | O_EXCL`, which fails atomically if the path already exists — preventing a malicious image layer from planting symlinks that redirect mounts outside the rootfs.
+
+**Temp directory isolation.** All extraction happens in a `mkdtemp`-created directory (mode `0700`), cleaned up by the parent process on exit.
 
 # Installation
 
